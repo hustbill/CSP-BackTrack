@@ -16,7 +16,6 @@ import java.util.List;
  * <li>C is a set of constraints that specify allowable combinations of values.</li>
  * </ul>
  * 
- * @author Ruediger Lunde
  */
 public class CSP {
 

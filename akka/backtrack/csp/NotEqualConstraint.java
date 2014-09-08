@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Represents a binary constraint which forbids equal values.
  * 
- * @author Ruediger Lunde
+ * @author Hua Zhang
  */
 public class NotEqualConstraint implements Constraint {
 

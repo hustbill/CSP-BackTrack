@@ -11,7 +11,7 @@ import java.util.List;
  * <b>Note:</b> Implementations of this interface define the different kinds of
  * relations that constraints can represent.
  * 
- * @author Ruediger Lunde
+ * @author Hua Zhang
  */
 public interface Constraint {
 	/** Returns a tuple of variables that participate in the constraint. */

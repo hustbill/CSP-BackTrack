@@ -36,7 +36,7 @@ package backtrack.csp;
  * (including those made by INFERENCE) are removed from the current assignment
  * and a new value is tried.
  * 
- * @author Ruediger Lunde
+ * @author Hua Zhang
  */
 public class BacktrackingStrategy extends SolutionStrategy {
 

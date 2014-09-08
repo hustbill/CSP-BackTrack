@@ -5,7 +5,7 @@ import java.util.Iterator;
 /**
  * Iterates efficiently through an array.
  * 
- * @author Ruediger Lunde
+ * @author Hua Zhang
  */
 public class ArrayIterator<T> implements Iterator<T> {
 

@@ -3,7 +3,7 @@ package backtrack.csp;
 /**
  * A variable is a distinguishable object with a name.
  * 
- * @author Ruediger Lunde
+ * @author Hua Zhang
  */
 public class Variable {
 	private String name;

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * An assignment assigns values to some or all variables of a CSP.
  * 
- * @author Ruediger Lunde
+ * @author Hua Zhang
  */
 public class Assignment {
 	/**

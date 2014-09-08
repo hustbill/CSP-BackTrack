@@ -9,8 +9,7 @@ import java.util.List;
  * abstract class provides the central interface method and additionally an
  * implementation of an observer mechanism.
  * 
- * @author Ruediger Lunde
- * @author Mike Stampone
+ * @author Hua Zhang
  */
 public abstract class SolutionStrategy {
 	List<CSPStateListener> listeners = new ArrayList<CSPStateListener>();
