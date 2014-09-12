@@ -30,6 +30,10 @@ public class NotEqualConstraint implements Constraint {
 	@Override
 	public boolean isSatisfiedWith(Assignment assignment) {
 		Object value1 = assignment.getAssignment(var1);
-		return value1 == null || !value1.equals(assignment.getAssignment(var2));
+		System.out.println(1);
+		Object value2 = assignment.getAssignment(var2);
+		System.out.println(value2);
+		
+		return value1 == null || !value1.equals(value2);
 	}
 }

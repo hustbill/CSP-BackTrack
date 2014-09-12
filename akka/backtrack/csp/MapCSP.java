@@ -1,7 +1,9 @@
 package backtrack.csp;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Random;
+import java.util.HashMap;
 
 
 /**
@@ -13,47 +15,39 @@ import java.util.Random;
  * @author Hua Zhang 
  */
 public class MapCSP extends CSP {
-	public static final int actors_num = 100;
-	public static final int nodes_num = 20;
-	public static final int constraints_num = 100;
+		 
+	/**
+	 *  check the conflict between two HashMaps- separate map and collocate map
+	 */
 
-	public static final Variable[] actors = new Variable[actors_num];
-	public static final String[] nodes = new String[nodes_num];
+	 public void checkConflict( Map<Integer, Integer> separateMap, Map<Integer, Integer> collocateMap) {
+		 
+		    for (Map.Entry<Integer, Integer> separateMapEntries : separateMap.entrySet()) {
+		        if(collocateMap.containsKey(separateMapEntries.getKey()) && collocateMap.get(separateMapEntries.getKey()).equals(separateMapEntries.getValue())){
+		            System.out.println("\tKey: " + separateMapEntries.getKey() + " Value: " + separateMapEntries.getValue());
+		        }
+		    }		 
+	 }
+	 
+	/**
+	 * Constructs a  CSP for separate and collocated relations
+	 */
+	public MapCSP(int actors_num, int nodes_num, int constraints_num) {
+		Variable[] actors = new Variable[actors_num];
+		String[] nodes = new String[nodes_num];
 
-	
-	public static final Variable  X = new Variable("X");
-	public static final Variable Y = new Variable("Y");
-	private static final Constraint C1 = new NotEqualConstraint(X, Y);
-	private static final Constraint C2 = new EqualConstraint(X, Y);
-	
-	 private void collectVariables() {
+		//collect Variables
 		for(int i=0; i< actors_num; i++ ) {
 			actors[i] = new Variable("actor" + i);
 			addVariable(actors[i]);
-		}
-		
-	}
-
-	 
-	/**
-	 * Constructs a  CSP for separate and collocate relations
-	 */
-	public MapCSP() {
-		collectVariables();
-		
+		}	
 		for (int i = 0; i< nodes_num ; i++) 
 			nodes[i] = "node" + i;
-		Domain colors = new Domain(nodes);
+		Domain nodesList = new Domain(nodes);
 
 		for (Variable var : getVariables())
-			setDomain(var, colors);
-		
-		for (int i = 0; i< actors_num-2 ; i++)  {
-		
-			addConstraint(new NotEqualConstraint(actors[i], actors[i+1]));
-			addConstraint(new NotEqualConstraint(actors[i], actors[i+2]));
-		}
-		
+			setDomain(var, nodesList);		
+
 		ArrayList<Integer> list = new ArrayList<Integer>();
 		for(int i =0; i< actors_num; i++) {
 			list.add(i);
@@ -61,28 +55,48 @@ public class MapCSP extends CSP {
 		
 		Variable actor1 , actor2, actor3, actor4;
 		Random rand = new Random();
-		int sepConstraints_num = constraints_num;
-		while( sepConstraints_num >0) {
-
-				actor1 =actors[ rand.nextInt(list.size())]; // select one actor 				       
-				actor2 = actors[rand.nextInt(list.size())];    //select second actor
-				if (actor1 != actor2)
-					addConstraint(new NotEqualConstraint(actor1, actor2));				
-			//System.out.println("sepConstraints_num= "+sepConstraints_num);
-			sepConstraints_num--;
-		}
-//	
-//     	int colConstraints_num = constraints_num;
-//		while( colConstraints_num >0) {
-//
-//				actor3 =actors[ rand.nextInt(list.size())]; // select third actor 	
-//				System.out.println("actor3=" + actor3);
-//				actor4 = actors[rand.nextInt(list.size())];    //select  forth actor
-//				System.out.println("actor4=" + actor4);
-//				if (actor4 != actor3)
-//					addConstraint(new EqualConstraint(actor3, actor4));				
-//			//System.out.println("sepConstraints_num= "+colConstraints_num);
-//			colConstraints_num--;
+		 Map<Integer, Integer> separateMap = new HashMap<Integer, Integer>();
+		 Map<Integer, Integer> collocateMap = new HashMap<Integer, Integer>();
+		 
+		 
+//		int sepConstraints_num = constraints_num;
+//		//Separate constraints for actors    
+//		while( sepConstraints_num >0) {
+//			Integer actor1_num = rand.nextInt(list.size());
+//			Integer actor2_num = rand.nextInt(list.size());			
+//			 //System.out.println("actor1_num= " + actor1_num);
+//			 //System.out.println("actor2_num= " + actor2_num);			 
+//				actor1 =actors[ actor1_num]; // select one actor 				       
+//				actor2 = actors[actor2_num];    //select second actor
+//			
+//				if (actor1_num != actor2_num){
+//					separateMap.put(actor1_num, actor2_num);
+//					System.out.println( actor1_num +","  + actor2_num + " Separate");
+//					addConstraint(new NotEqualConstraint(actor1, actor2));				
+//					//System.out.println("sepConstraints_num= "+sepConstraints_num);
+//					sepConstraints_num--;
+//				}
 //		}
+		System.out.println("---------------------------");
+		
+		//Collocate constraints for actors    
+		int colConstraints_num = constraints_num;
+		while( colConstraints_num >0) {
+			Integer actor3_num = rand.nextInt(list.size());
+			Integer actor4_num = rand.nextInt(list.size());
+			actor3 =actors[ actor3_num]; // select third actor	
+			actor4 = actors[actor4_num];    //select  forth actor			
+				if (actor3_num != actor4_num) {
+					collocateMap.put(actor3_num, actor4_num);
+					System.out.println( actor3_num +","  + actor4_num + " collocate");
+					addConstraint(new EqualConstraint(actor3, actor4));				
+					//System.out.println("colConstraints_num= "+colConstraints_num);
+					colConstraints_num--;
+				}
+		}		
+//		checkConflict(  separateMap,  collocateMap);//check the conflicts
+		
 	}
+	
+	 
 }

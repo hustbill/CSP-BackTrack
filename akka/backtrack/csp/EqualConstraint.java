@@ -28,8 +28,18 @@ public class EqualConstraint implements Constraint {
 
 	@Override
 	public boolean isSatisfiedWith(Assignment assignment) {
+		
+		System.out.println(var1);
 		Object value1 = assignment.getAssignment(var1);
-		//System.out.println(var1);
-		return value1 == null || value1.equals(assignment.getAssignment(var2));
+		
+		System.out.println(var2);
+		System.out.println();
+		//System.out.println(value1);
+		Object value2 = assignment.getAssignment(var2);
+		System.out.println(value2);
+		
+	
+		//return value1 == null || value1.equals(assignment.getAssignment(var2));
+		return value1.equals(assignment.getAssignment(var2));
 	}
 }
